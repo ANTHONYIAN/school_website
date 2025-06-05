@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admissions</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: clamp(14px, 2vw, 18px);
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: #000;
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      text-align: center;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      padding: 10px;
+      justify-content: center;
+      background: #111;
+      box-shadow: 0 0 10px #0ff;
+      border-radius: 12px;
+      margin-bottom: 30px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #0ff;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #fff;
+    }
+
+    header, footer {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 14px 28px;
+      font-size: 1rem;
+      background: #fff;
+      color: #000;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      box-shadow: 0 0 15px #fff;
+      transition: transform 0.3s ease;
+      font-weight: 600;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .popup-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .popup-overlay.active {
+      display: flex;
+    }
+
+    .popup-overlay.active .popup-box {
+      animation: slideUp 0.4s ease-out forwards;
+    }
+
+    @keyframes slideUp {
+      0% {
+        transform: translateY(20%);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .popup-box {
+      background: #111;
+      border: 2px solid #fff;
+      border-radius: 15px;
+      padding: 30px 40px;
+      max-width: 600px;
+      width: 95%;
+      box-shadow: 0 0 20px #fff;
+      position: relative;
+      font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 15px;
+      font-size: 1.25rem;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="date"],
+    select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1.5px solid #530d0d;
+      background: transparent;
+      color: #0c363d;
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: rgb(47, 85, 49);
+      box-shadow: 0 0 5px rgb(47, 85, 49);
+    }
+
+    .gender-option {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 5px;
+      font-size: 0.95rem;
+    }
+
+    input[type="radio"] {
+      accent-color: rgb(19, 109, 19);
+      cursor: pointer;
+    }
+
+    input[type="submit"] {
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: #fff;
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0ff;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      position: absolute;
+      top: 15px;
+      right: 25px;
+    }
+
+    @media (max-width: 600px) {
+      .popup-box {
+        padding: 20px;
+      }
+
+      h2 {
+        font-size: 1rem;
+      }
+
+      button {
+        font-size: 1rem;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+ <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About DCSA</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="programs.html">Programs</a></li>
+      <li><a href="admission.html">Admissions</a></li>
+    </ul>
+  </nav>
+
+  <header>
+    <img src="images 1.jpg" alt="DATEMEX College Logo" class="logo">
+    <h1>DATEMEX College of Saint Adeline</h1>
+    <p>Where your future begins!</p>
+  </header>
+
+  <button id="openFormBtn">☛ Apply now — click here! ☚</button>
+
+  <div class="popup-overlay" id="formPopup">
+    <div class="popup-box" role="dialog" aria-modal="true" aria-labelledby="formTitle">
+      <button class="close-btn" id="closeFormBtn" aria-label="Close form">&times;</button>
+
+      <form id="admissionForm">
+        <h2 id="formTitle">⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠋⠁⠀⠀⠈⠉⠙⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⢻⣿⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⢀⣠⣤⣤⣤⣤⣄⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠾⣿⣿⣿⣿⠿⠛⠉⠀⠀⠀⠀⠘⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⡏⠀⠀⠀⣤⣶⣤⣉⣿⣿⡯⣀⣴⣿⡗⠀⠀⠀⠀⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⡇⠀⠀⠀⡈⠀⠀⠉⣿⣿⣶⡉⠀⠀⣀⡀⠀⠀⠀⢻⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⡇⠀⠀⠸⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⠇⠀⠀⠀⢸⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⠀⠀⠀⠉⢉⣽⣿⠿⣿⡿⢻⣯⡍⢁⠄⠀⠀⠀⣸⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⣿⡄⠀⠀⠐⡀⢉⠉⠀⠠⠀⢉⣉⠀⡜⠀⠀⠀⠀⣿⣿⣿⣿⣿
+⣿⣿⣿⣿⣿⣿⠿⠁⠀⠀⠀⠘⣤⣭⣟⠛⠛⣉⣁⡜⠀⠀⠀⠀⠀⠛⠿⣿⣿⣿
+⡿⠟⠛⠉⠉⠀⠀⠀⠀⠀⠀⠀⠈⢻⣿⡀⠀⣿⠏⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠉
+⠀Reserve Your Spot Now!</h2>
+
+        <label for="branch">Branch Reference</label>
+        <input type="text" id="branch" name="branch" required />
+
+        <label for="programs">Select Program</label>
+        <select id="programs" name="programs" required>
+          <option value="" disabled selected>Select a Program</option>
+          <option value="ACT">ACT</option>
+          <option value="BSIT">BSIT</option>
+          <option value="BSTM">BSTM</option>
+          <option value="BSOA">BSOA</option>
+          <option value="BSHM">BSHM</option>
+          <option value="ICT">ICT</option>
+          <option value="HE">HE</option>
+          <option value="ABM">ABM</option>
+          <option value="GAS">GAS</option>
+          <option value="HUMSS">HUMSS</option>
+          <option value="STEM">STEM</option>
+        </select>
+
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" name="first-name" required />
+
+        <label for="middle-name">Middle Name</label>
+        <input type="text" id="middle-name" name="middle-name" required />
+
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" name="last-name" required />
+
+        <label for="address">Address</label>
+        <input type="text" id="address" name="address" required />
+
+        <label for="contact">Contact No.</label>
+        <input type="tel" id="contact" name="contact" required />
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" required />
+
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob" required />
+
+        <label>Gender</label>
+        <div class="gender-option">
+          <label><input type="radio" name="gender" value="male" required /> Male</label>
+          <label><input type="radio" name="gender" value="female" /> Female</label>
+          <label><input type="radio" name="gender" value="other" /> Other</label>
+        </div>
+
+        <input type="submit" value="🗳✓ Submit Application" />
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2024 DATEMEX College of Saint Adeline. All rights reserved.</p>
+  </footer>
+
+  <script>
+    const openBtn = document.getElementById('openFormBtn');
+    const closeBtn = document.getElementById('closeFormBtn');
+    const popup = document.getElementById('formPopup');
+    const form = document.getElementById('admissionForm');
+
+    openBtn.addEventListener('click', () => {
+      popup.classList.add('active');
+    });
+
+    closeBtn.addEventListener('click', () => {
+      popup.classList.remove('active');
+    });
+
+    popup.addEventListener('click', (e) => {
+      if (e.target === popup) {
+        popup.classList.remove('active');
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      try {
+        const response = await fetch('submit_form.php', {
+          method: 'POST',
+          body: formData
+        });
+        if (!response.ok) throw new Error('Submission failed');
+        const result = await response.text();
+        alert('Application submitted successfully!');
+        form.reset();
+        popup.classList.remove('active');
+        console.log(result);
+      } catch (err) {
+        alert('Error submitting application.');
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+</html>
